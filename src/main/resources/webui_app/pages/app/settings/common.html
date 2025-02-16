@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../../assets/jsoneditor.min.css">
+    <script src="../../../assets/jsoneditor.min.js"></script>
+    <script src="../../../../webui/assets/jquery-3.7.1.min.js"></script>
+    <script src="../../../../webui/assets/app.js"></script>
+    <script src="../../../../webui/assets/sweetalert2.js"></script>
+    <title>settings</title>
+</head>
+<body>
+    <h1>设置:</h1><span id="title" style="white-space: normal; word-wrap: break-word; word-break: break-word;"></span><br>
+    <button onclick="save();">保存</button>
+    <button onclick="def();">恢复默认</button>
+    <hr>
+    <div id="jsoneditor" style="width: 98%;"></div>
+
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name); // 返回参数值
+        }
+        $("#title").html(getQueryParam("id")+"/"+getQueryParam('class'));
+        var data = $.parseJSON(synchronousPostRequest(`../../../../../../data/settings/wa/config.json?id=${getQueryParam("id")}&class=${getQueryParam('class')}&action=get`,""));
+        if (data.status==="error"){
+            Swal.fire({
+                title: data.status,
+                text: data.msg,
+                icon: data.status
+            });
+        }
+        // create the editor
+        const container = document.getElementById("jsoneditor")
+        const options = {}
+        editor = new JSONEditor(container, options)
+        editor.set($.parseJSON(data.data));
+        function save() {
+            var data = $.parseJSON(synchronousPostRequest(`../../../../../../data/settings/wa/config.json?id=${getQueryParam("id")}&class=${getQueryParam('class')}&action=save`,JSON.stringify(editor.get())));
+            Swal.fire({
+                title: data.status,
+                text: data.msg,
+                icon: data.status
+            }).then((result) => {
+                if(data.status==="success")
+                window.parent.location.reload();
+            });
+        }
+        function def() {
+            var data = $.parseJSON(synchronousPostRequest(`../../../../../../data/settings/wa/config.json?id=${getQueryParam("id")}&class=${getQueryParam('class')}&action=default`,""));
+            Swal.fire({
+                title: data.status,
+                text: data.msg,
+                icon: data.status
+            }).then((result) => {
+                if(data.status==="success")
+                window.parent.location.reload();
+            });
+        }
+    </script>
+</body>
+</html>

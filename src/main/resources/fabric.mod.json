@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "webui",
+  "version": "1.0.0",
+  "name": "webui",
+  "description": "webui.",
+  "authors": [
+    "HANANA"
+  ],
+  "contact": {
+    "homepage": "https://hanana2.link/"
+  },
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.eu.hanana.reimu.app.mod.webui.ModFabric"
+    ],
+    "post_start": [
+
+    ]
+  },
+  "mixins": [
+    "webui.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.0",
+    "java": ">=18"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+  "custom":{
+    "legacyMods":[
+      "webui_legacy"
+    ]
+  }
+}

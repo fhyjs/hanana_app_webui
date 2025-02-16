@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "org.eu.hanana.reimu.app.mod.webui.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "MixinModLoader"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
