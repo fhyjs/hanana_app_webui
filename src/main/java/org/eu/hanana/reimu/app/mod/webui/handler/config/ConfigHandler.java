@@ -7,6 +7,7 @@ import com.google.gson.JsonPrimitive;
 import net.fabricmc.loader.impl.util.log.Log;
 import org.eu.hanana.reimu.app.mod.webui.ModFabric;
 import org.eu.hanana.reimu.app.mod.webui.Util;
+import org.eu.hanana.reimu.app.mod.webui.config.SaveProcessor;
 import org.eu.hanana.reimu.hnnapp.Datas;
 import org.eu.hanana.reimu.hnnapp.ModLoader;
 import org.eu.hanana.reimu.webui.handler.AbstractPathHandler;
@@ -60,6 +61,10 @@ public class ConfigHandler extends AbstractPathHandler {
                         field.set(null,o);
                     }
                     mod.cfgCore.saveCfg();
+                    if (clazz.isAnnotationPresent(SaveProcessor.class)){
+                        var sp = clazz.getAnnotation(SaveProcessor.class).value().getConstructor().newInstance();
+                        result.addProperty("msg",sp.save());
+                    }
                 }else if (acton.equals("get")){
                     String s = Files.readString(new File(mod.cfgCore.cfgDir, clazz.getName() + ".cfg").toPath(), StandardCharsets.UTF_8);
                     result.addProperty("data",s);
@@ -77,6 +82,10 @@ public class ConfigHandler extends AbstractPathHandler {
                             Files.writeString(path,s,StandardCharsets.UTF_8);
                             mod.cfgCore.readCfgCls();
                             mod.cfgCore.saveCfg();
+                            if (clazz.isAnnotationPresent(SaveProcessor.class)){
+                                var sp = clazz.getAnnotation(SaveProcessor.class).value().getConstructor().newInstance();
+                                result.addProperty("msg",sp.save());
+                            }
                         }catch (Throwable throwable){
                             try {
                                 Files.writeString(path,tmp,StandardCharsets.UTF_8);

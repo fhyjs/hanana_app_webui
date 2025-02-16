@@ -7,6 +7,7 @@ import org.eu.hanana.reimu.app.mod.webui.event.WebUiCreatedEvent;
 import org.eu.hanana.reimu.app.mod.webui.config.WebuiCfgCore;
 import org.eu.hanana.reimu.app.mod.webui.handler.AppJsMainHandler;
 import org.eu.hanana.reimu.app.mod.webui.handler.config.ConfigHandler;
+import org.eu.hanana.reimu.app.mod.webui.handler.config.ConfigListHandler;
 import org.eu.hanana.reimu.app.mod.webui.handler.config.ConfigStructureHandler;
 import org.eu.hanana.reimu.hnnapp.ModLoader;
 import org.eu.hanana.reimu.hnnapp.mods.Event;
@@ -36,6 +37,7 @@ public class ModMain {
         webUi.handlers.add(new AppJsMainHandler());
         webUi.handlers.add(new ConfigStructureHandler());
         webUi.handlers.add(new ConfigHandler());
+        webUi.handlers.add(new ConfigListHandler());
         webUi.addPermissionRule("^/static/cp/webui_app/pages/settings.*",10);
         webUi.open(false);
     }
