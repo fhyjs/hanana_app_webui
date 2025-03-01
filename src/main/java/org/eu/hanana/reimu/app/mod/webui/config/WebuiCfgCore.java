@@ -11,11 +11,12 @@ public class WebuiCfgCore extends CfgCoreBase {
     @SaveProcessor(Config.Saver.class)
     public static class Config{
         public static int port = 5160;
+        public static long session_expire_second = 10800;
         public static class Saver implements IConfigSaver{
 
             @Override
             public String save() {
-                return "需要重启";
+                return "端口修改需要重启";
             }
         }
     }

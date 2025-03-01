@@ -16,6 +16,15 @@ import org.eu.hanana.reimu.hnnapp.mods.events.AfterInfoEvent;
 import org.eu.hanana.reimu.hnnapp.mods.events.ExitEvent;
 import org.eu.hanana.reimu.hnnapp.mods.events.PostInitModsEvent;
 import org.eu.hanana.reimu.webui.WebUi;
+import org.eu.hanana.reimu.webui.session.LocalSessionManager;
+import org.eu.hanana.reimu.webui.session.MemorySessionManager;
+import org.eu.hanana.reimu.webui.session.MemorySessionStorage;
+import org.eu.hanana.reimu.webui.session.User;
+
+import java.time.Instant;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static org.eu.hanana.reimu.app.mod.webui.ModFabric.MOD_ID_Legacy;
 
@@ -26,6 +35,7 @@ public class ModMain {
     protected static ModMain WebUiMod;
     @Getter
     private WebUi  webUi;
+    public ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     @Event
     public void onPostInitModsEvent(PostInitModsEvent event){
         ModLoader.getLoader().regCfgCore(MOD_ID_Legacy,new WebuiCfgCore());
@@ -46,6 +56,7 @@ public class ModMain {
     public void onExitEvent(ExitEvent event){
         ModLoader.postEvent(new WebUiClosingEvent(webUi));
         webUi.close();
+        scheduler.close();
     }
     public ModMain(){
         WebUiMod=this;
