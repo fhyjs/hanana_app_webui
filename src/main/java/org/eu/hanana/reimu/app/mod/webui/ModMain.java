@@ -49,6 +49,7 @@ public class ModMain {
         webUi.handlers.add(new ConfigHandler());
         webUi.handlers.add(new ConfigListHandler());
         webUi.addPermissionRule("^/static/cp/webui_app/pages/settings.*",10);
+        webUi.getSessionManage().setExpire(WebuiCfgCore.Config.session_expire_second);
         webUi.open(false);
     }
     @SneakyThrows

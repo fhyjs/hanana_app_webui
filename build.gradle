@@ -48,7 +48,7 @@ dependencies {
     implementation 'io.projectreactor.netty:reactor-netty:1.2.2'
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.xerial:sqlite-jdbc:3.49.0.0'
-    implementation "org.eu.hanana.reimu.webui:webui:1.0.5"
+    implementation "org.eu.hanana.reimu.webui:webui:1.0.6"
     implementation "org.eu.hanana.reimu.hnn.neoloader:hanana-neoloader:1.0-SNAPSHOT"
     compileOnly "org.eu.hanana.reimu.hnnapp:app:1.0.1"
     testImplementation platform('org.junit:junit-bom:5.10.0')
